@@ -86,7 +86,7 @@ public class Login_Activity extends AppCompatActivity {
 
                                 editor.apply();
 
-                                Intent intent = new Intent(Login_Activity.this, Select_Room.class);
+                                Intent intent = new Intent(Login_Activity.this, MainActivity.class);
                                 startActivity(intent); // Start the Select_Room activity
 
 //                                finish();
