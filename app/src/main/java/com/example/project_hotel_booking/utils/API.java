@@ -9,7 +9,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface API {
-    String BASE_URL ="http://192.168.0.110:4004";
+    String BASE_URL ="http://192.168.0.113:4004";
 
     @POST("/user/login")
     Call<JsonObject> loginUser(@Body User user);

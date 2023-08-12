@@ -11,14 +11,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.project_hotel_booking.Fragments.DateActivityFragment;
 import com.example.project_hotel_booking.R;
 import com.example.project_hotel_booking.activity.Date_Activity;
 import com.example.project_hotel_booking.entity.Room;
 
 import java.util.List;
+import com.example.project_hotel_booking.Fragments.DateActivityFragment;
+
 
 public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomViewHolder>
 {
@@ -45,10 +52,8 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
         holder.textRoomName.setText(""+room.getRoomNumber());
         holder.textDetails.setText(room.getRoomType());
 
-        Glide.with(context).load("http://192.168.0.110:4004/"+room.getImages()).into(holder.image);
-        holder.selectButton.setOnClickListener(new View.OnClickListener()
-
-        {
+        Glide.with(context).load("http://192.168.0.113:4004/"+room.getImages()).into(holder.image);
+        holder.selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Save room details to SharedPreferences
@@ -58,8 +63,27 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
                 editor.putString("selected_room_type", room.getRoomType());
                 editor.apply();
 
-                Intent intent =new Intent( context, Date_Activity.class);
-                context.startActivity(intent);
+                FragmentManager fragmentManager = ((FragmentActivity) context).getSupportFragmentManager();
+                fragmentManager.popBackStack();
+
+                // Create an instance of DateActivityFragment
+                DateActivityFragment dateActivityFragment = new DateActivityFragment();
+
+                // Replace the current fragment with DateActivityFragment
+
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                // Replace Fragment1 with DateActivityFragment
+                fragmentTransaction.replace(R.id.containerFrameLayout, dateActivityFragment);
+                Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_select_room);
+                // Add the transaction to the back stack (optional)
+                fragmentTransaction.addToBackStack(null);
+                // Commit the transaction
+                fragmentTransaction.commit();
+
+
+
+
             }
         });
 
