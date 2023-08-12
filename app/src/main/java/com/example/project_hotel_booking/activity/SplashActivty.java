@@ -29,7 +29,7 @@ public class SplashActivty extends AppCompatActivity {
                 try {
                     Thread.sleep(2000);
                     if(getSharedPreferences("project",MODE_PRIVATE).getBoolean("login_status",false))
-                        startActivity(new Intent(SplashActivty.this, Select_Room.class));
+                        startActivity(new Intent(SplashActivty.this, MainActivity.class));
                     else
                         startActivity(new Intent(SplashActivty.this, Login_Activity.class));
                     finish();

@@ -13,6 +13,8 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.project_hotel_booking.R;
 
@@ -32,6 +34,7 @@ public class DateActivityFragment extends Fragment {
     public DateActivityFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,10 +61,10 @@ public class DateActivityFragment extends Fragment {
         });
 
         // Handle the confirm button click if needed
+        // Inside the onClick method of buttonConfirm in DateActivityFragment
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 // Add your code for handling the confirm button click
                 sharedPreferences = requireActivity().getSharedPreferences("project", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -70,9 +73,20 @@ public class DateActivityFragment extends Fragment {
                 editor.putString("check_out_date", textCheckOutDate.getText().toString());
                 editor.apply();
 
+                // Set the visibility of the DateActivityFragment to INVISIBLE
+                getView().setVisibility(View.INVISIBLE);
 
+                // Replace the current fragment with the ConfirmationFragment
+                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                ConfirmationFragment confirmationFragment = new ConfirmationFragment();
+                fragmentTransaction.replace(R.id.containerFrameLayout, confirmationFragment); // R.id.fragment_container should be the ID of the container in your activity's layout
+//                fragmentTransaction.addToBackStack(null); // This allows you to go back to the DateActivityFragment if needed
+                fragmentTransaction.commit();
             }
         });
+
 
         return view;
     }
