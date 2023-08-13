@@ -6,16 +6,20 @@ public class Reservation {
     private int roomId;
     private String checkInDate;
     private String checkOutDate;
+    private Room room;
+    private Confirmation confirmation;
 
     public Reservation() {
     }
 
-    public Reservation(int reservationId, int guestId, int roomId, String checkInDate, String checkOutDate) {
+    public Reservation(int reservationId, int userId, Room room, String checkInDate, String checkOutDate) {
         this.reservationId = reservationId;
         this.guestId = guestId;
         this.roomId = roomId;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
+        this.room = room;
+
     }
 
     public int getReservationId() {
@@ -79,5 +83,20 @@ public class Reservation {
 
     public void manageBooking() {
         // Manage booking logic
+    }
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public void setConfirmation(Confirmation confirmation) {
+        this.confirmation = confirmation;
+    }
+
+    public Confirmation getConfirmation() {
+        return confirmation;
     }
 }

@@ -5,10 +5,31 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.Fragment2">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+                <TextView
+                    android:id="@+id/textViewfragement_2"
+                    android:textSize="40dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Confirmed reservations" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclearViewFragment2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/noConfirmedBookingsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="You don't have any confirmed bookings."
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+        </LinearLayout>
 </FrameLayout>

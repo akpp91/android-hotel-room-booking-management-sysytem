@@ -1,66 +1,121 @@
 package com.example.project_hotel_booking.Fragments;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.example.project_hotel_booking.Adapter.BookingListAdapter;
 import com.example.project_hotel_booking.R;
+import com.example.project_hotel_booking.entity.Confirmation;
+import com.example.project_hotel_booking.entity.Reservation;
+import com.example.project_hotel_booking.entity.Room;
+import com.example.project_hotel_booking.utils.RetrofitClient;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Fragment2#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class Fragment2 extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private RecyclerView recyclerView;
+    private BookingListAdapter bookingListAdapter;
+    List<Reservation> bookingItemList;
+    private TextView noConfirmedBookingsTextView;
 
     public Fragment2() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment2.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Fragment2 newInstance(String param1, String param2) {
-        Fragment2 fragment = new Fragment2();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_2, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_2, container, false);
+
+        noConfirmedBookingsTextView = rootView.findViewById(R.id.noConfirmedBookingsTextView);
+
+        bookingItemList = new ArrayList<>();
+
+        recyclerView = rootView.findViewById(R.id.recyclearViewFragment2);
+        bookingListAdapter = new BookingListAdapter(getContext(), bookingItemList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(bookingListAdapter);
+        getBookings();
+        return rootView;
     }
+
+    private void getBookings() {
+        // Get the context of the Fragment
+        Context context = getContext();
+
+        // Check if the context is not null before proceeding
+        if (context != null) {
+            SharedPreferences sharedPreferences = context.getSharedPreferences("project", MODE_PRIVATE);
+            int userId = sharedPreferences.getInt("user_id", -1);
+
+            RetrofitClient.getInstance().getApi().getUserReservations(userId).enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response)
+                {
+                    JsonArray jsonArray = response.body().getAsJsonObject().get("data").getAsJsonArray();
+
+                    if (jsonArray == null || jsonArray.size() == 0) {
+                        // No confirmed bookings
+                        recyclerView.setVisibility(View.GONE);
+                        noConfirmedBookingsTextView.setVisibility(View.VISIBLE);
+                    } else {
+                        // Confirmed bookings available
+                        recyclerView.setVisibility(View.VISIBLE);
+                        noConfirmedBookingsTextView.setVisibility(View.GONE);
+
+                        for (JsonElement element : jsonArray) {
+                            Reservation reservation = new Reservation();
+                            reservation.setReservationId(element.getAsJsonObject().get("reservation_id").getAsInt());
+                            reservation.setCheckInDate(element.getAsJsonObject().get("check_in_date").getAsString());
+                            reservation.setCheckOutDate(element.getAsJsonObject().get("check_out_date").getAsString());
+
+                            Room room = new Room();
+                            room.setRoomType(element.getAsJsonObject().get("room_type").getAsString());
+                            room.setRoomNumber(element.getAsJsonObject().get("room_number").getAsInt());
+
+                            reservation.setRoom(room);
+
+                            Confirmation confirmation = new Confirmation();
+                            confirmation.setConfirmationId(element.getAsJsonObject().get("confirmation_id").getAsInt());
+                            confirmation.setAmount(element.getAsJsonObject().get("amount").getAsFloat());
+                            confirmation.setPaymentDate(element.getAsJsonObject().get("payment_date").getAsString());
+
+                            reservation.setConfirmation(confirmation);
+
+                            bookingItemList.add(reservation);
+                        }
+                        bookingListAdapter.notifyDataSetChanged();
+                    }
+                }
+
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+                    // Handle failure here
+                }
+            });
+        }
+    }
+
 }

@@ -43,8 +43,8 @@ public class SelectRoomFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_select_room, container, false);
 
         roomList = new ArrayList<>();
-        recyclerView = rootView.findViewById(R.id.recyclerView);
 
+        recyclerView = rootView.findViewById(R.id.recyclerView);
         roomListAdapter = new RoomListAdapter(getActivity(), roomList);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         recyclerView.setAdapter(roomListAdapter);

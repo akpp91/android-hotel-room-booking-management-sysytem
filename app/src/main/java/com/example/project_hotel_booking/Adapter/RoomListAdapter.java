@@ -80,7 +80,7 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
                 // Commit the transaction
                 fragmentTransaction.commit();
 
-// Set the visibility of fragment_select_room to invisible
+                // Set the visibility of fragment_select_room to invisible
                 View fragmentSelectRoom = ((FragmentActivity) context).findViewById(R.id.fragment_select_room);
                 if (fragmentSelectRoom != null) {
                     fragmentSelectRoom.setVisibility(View.INVISIBLE);
@@ -104,7 +104,8 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
         TextView textDetails;
         Button selectButton;
 
-        public RoomViewHolder(@NonNull View itemView) {
+        public RoomViewHolder(@NonNull View itemView)
+        {
             super(itemView);
             image = itemView.findViewById(R.id.image);
             textRoomName = itemView.findViewById(R.id.textRoomName);
