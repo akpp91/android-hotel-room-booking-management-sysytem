@@ -33,4 +33,7 @@ public interface API {
     @GET("/reservation/user_reservation/{userId}/{reservationId}")
     Call<JsonObject> getUserReservationDetails(@Path("userId") int userId, @Path("reservationId") int reservationId);
 
+    @POST("/feedback/post")
+    Call<JsonObject> postFeedback(@Body JsonObject feedbackData);
+
 }

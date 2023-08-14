@@ -2,6 +2,7 @@ package com.example.project_hotel_booking.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,7 @@ public class Register_Activity extends AppCompatActivity {
 
     EditText editTextFirstName, editTextLastName,editTextEmail,editTextPhoneNumber,editTextPassword, editTextConfirmPassword;
     Button buttonRegister;
+    Button btnGoToLogin ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +38,9 @@ public class Register_Activity extends AppCompatActivity {
         editTextPassword =findViewById(R.id.editTextPassword);
         buttonRegister = findViewById(R.id.buttonRegister);
         editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
-
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
+        btnGoToLogin= findViewById(R.id.btnLogin);
+        buttonRegister.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v)
 
@@ -104,6 +107,14 @@ public class Register_Activity extends AppCompatActivity {
                     return null;
                 }
 
+            }
+        });
+
+        btnGoToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Register_Activity.this, Login_Activity.class));
+                finish(); // Optional: Finish the current activity
             }
         });
     }

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -115,6 +116,25 @@ private Button btn_feedback;
             });
         }
 
+        btn_feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an instance of the FeedbackFragment
+                FeedbackFragment feedbackFragment = new FeedbackFragment();
+
+                // Start a new fragment transaction
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+
+                // Replace the current fragment with the FeedbackFragment
+                transaction.replace(R.id.fragment_container_confirm_list, feedbackFragment);
+
+                // Add the transaction to the back stack (optional)
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+            }
+        });
 
         return rootView;
 
