@@ -1,19 +1,29 @@
 package com.example.project_hotel_booking.Adapter;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.project_hotel_booking.Fragments.BookingDetailFragment;
 import com.example.project_hotel_booking.R;
 import com.example.project_hotel_booking.entity.Reservation;
 import com.example.project_hotel_booking.entity.Room;
@@ -24,7 +34,7 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
 
     private Context context;
     private List<Reservation> bookingItemList;
-    private SharedPreferences sharedPreferences;
+
 
     public BookingListAdapter(Context context, List<Reservation> bookingItemList) {
         this.context = context;
@@ -55,8 +65,31 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
             @Override
             public void onClick(View v) {
 
+                int reservationId = bookingItem.getReservationId(); // Get the reservation ID
+
+                // Save the reservation ID to SharedPreferences
+                SharedPreferences sharedPreferences = context.getSharedPreferences("project", MODE_PRIVATE);
+                sharedPreferences.edit().putInt("selected_reservation_id", reservationId).apply();
+
+                // Replace Fragment2 with BookingDetailFragment
+                BookingDetailFragment bookingDetailFragment = new BookingDetailFragment();
+
+
+
+                FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container_confirm_list, bookingDetailFragment);
+//                transaction.addToBackStack(null);
+                transaction.commit();
+
+                // Set the visibility of frag2 to invisible
+                View fragmentLLoffrag2 = ((FragmentActivity) context).findViewById(R.id.your_linear_layout_id);
+                if (fragmentLLoffrag2 != null) {
+                    fragmentLLoffrag2.setVisibility(View.INVISIBLE);
+                }
+
             }
         });
+
     }
 
 
@@ -70,6 +103,7 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
 
         TextView textRoomType, textRoomNumber;
         Button btn_detail;
+        LinearLayout linearLayout;
 
         public ViewHolder(@NonNull View itemView)
         {
@@ -78,6 +112,7 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
 
             textRoomNumber = itemView.findViewById(R.id.textRoomNumber);
             textRoomType = itemView.findViewById(R.id.textRoomType);
+            linearLayout = itemView.findViewById(R.id.your_linear_layout_id);
 
             btn_detail = itemView.findViewById(R.id.btn_detail);
         }

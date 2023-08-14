@@ -30,6 +30,7 @@ public interface API {
     @GET("/reservation/user_reservations/{userId}")
     Call<JsonObject> getUserReservations(@Path("userId") int userId);
 
-
+    @GET("/reservation/user_reservation/{userId}/{reservationId}")
+    Call<JsonObject> getUserReservationDetails(@Path("userId") int userId, @Path("reservationId") int reservationId);
 
 }

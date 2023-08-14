@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:orientation="vertical"
+    tools:context=".Fragments.BookingDetailFragment">
+
+    <TextView
+        android:id="@+id/reservationIdTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reservation ID: " />
+
+    <TextView
+        android:id="@+id/checkInDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Check-in Date: " />
+
+    <TextView
+        android:id="@+id/checkOutDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Check-out Date: " />
+
+    <TextView
+        android:id="@+id/roomTypeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Room Type: " />
+
+    <TextView
+        android:id="@+id/roomNumberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Room Number: " />
+
+    <TextView
+        android:id="@+id/confirmationIdTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirmation ID: " />
+
+    <TextView
+        android:id="@+id/amountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Amount: " />
+
+    <TextView
+        android:id="@+id/paymentDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Payment Date: " />
+
+    <Button
+        android:id="@+id/btnfeedback"
+        android:hint="feedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+    ></Button>
+</LinearLayout>
