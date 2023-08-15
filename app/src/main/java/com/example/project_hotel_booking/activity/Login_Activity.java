@@ -89,7 +89,7 @@ public class Login_Activity extends AppCompatActivity {
                                 Intent intent = new Intent(Login_Activity.this, MainActivity.class);
                                 startActivity(intent); // Start the Select_Room activity
 
-//                                finish();
+                                finish();
                             }
                             else
                             {
