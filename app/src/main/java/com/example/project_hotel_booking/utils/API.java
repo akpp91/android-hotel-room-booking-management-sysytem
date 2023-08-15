@@ -36,4 +36,7 @@ public interface API {
     @POST("/feedback/post")
     Call<JsonObject> postFeedback(@Body JsonObject feedbackData);
 
+    @GET("/user/{id}")
+    Call<JsonObject> RetriveUser(@Path("id") Integer id);
+
 }
