@@ -89,18 +89,18 @@ private Button btn_feedback;
 
                         for (JsonElement element : jsonArray)
                         {
-                            reservationIdTextView.setText(String.valueOf(element.getAsJsonObject().get("reservation_id").getAsInt()));
+                            reservationIdTextView.setText("Reservation ID: " + element.getAsJsonObject().get("reservation_id").getAsInt());
 
+                            checkInDateTextView.setText("Check-in Date: " + element.getAsJsonObject().get("check_in_date").getAsString());
+                            checkOutDateTextView.setText("Check-out Date: " + element.getAsJsonObject().get("check_out_date").getAsString());
 
-                            checkInDateTextView.setText(element.getAsJsonObject().get("check_in_date").getAsString());
-                            checkOutDateTextView.setText(element.getAsJsonObject().get("check_out_date").getAsString());
+                            roomNumberTextView.setText("Room Number: " + String.valueOf(element.getAsJsonObject().get("room_number").getAsInt()));
+                            roomTypeTextView.setText("Room Type: " + element.getAsJsonObject().get("room_type").getAsString());
 
-                            roomNumberTextView.setText(String.valueOf(element.getAsJsonObject().get("room_number").getAsInt()));
-                            roomTypeTextView.setText(element.getAsJsonObject().get("room_type").getAsString());
+                            confirmationIdTextView.setText("Confirmation ID: " + String.valueOf(element.getAsJsonObject().get("confirmation_id").getAsInt()));
+                            amountTextView.setText("Amount: " + String.valueOf(element.getAsJsonObject().get("amount").getAsFloat()));
+                            paymentDateTextView.setText("Payment Date: " + element.getAsJsonObject().get("payment_date").getAsString());
 
-                            confirmationIdTextView.setText(String.valueOf(element.getAsJsonObject().get("confirmation_id").getAsInt()));
-                            amountTextView.setText(String.valueOf(element.getAsJsonObject().get("amount").getAsFloat()));
-                            paymentDateTextView.setText(element.getAsJsonObject().get("payment_date").getAsString());
                         }
 
 

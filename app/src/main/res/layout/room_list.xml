@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="8dp"
     android:layout_width="match_parent"
@@ -7,7 +8,9 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:cardElevation="4dp">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -16,38 +19,40 @@
 
             <ImageView
                 android:id="@+id/image"
-                android:src="@drawable/ic_launcher_background"
-                android:layout_width="100dp"
-                android:layout_height="100dp"/>
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
 
             <LinearLayout
                 android:layout_margin="10dp"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:orientation="vertical"
                 android:layout_height="wrap_content">
+
                 <TextView
-                    android:layout_marginTop="5dp"
-                    android:textSize="15dp"
                     android:id="@+id/textRoomName"
-                    android:text="nameType"
-                    android:layout_width="match_parent"
+                    android:text="Standard Room"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+
                 <TextView
-                    android:layout_marginTop="5dp"
-                    android:textSize="15dp"
                     android:id="@+id/textDetails"
-                    android:text="Details"
-                    android:layout_width="match_parent"
+                    android:text="2 guests | Queen bed | AC"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+
                 <Button
                     android:id="@+id/selectRoom"
-                    android:layout_marginTop="5dp"
-                    android:textSize="15dp"
-                    android:text="select"
+                    android:text="Select Room"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"></Button>
+                    android:layout_height="wrap_content"/>
+
             </LinearLayout>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
 </LinearLayout>

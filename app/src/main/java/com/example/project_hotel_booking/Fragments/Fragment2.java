@@ -68,8 +68,8 @@ public class Fragment2 extends Fragment {
             if (context != null) {
                 SharedPreferences sharedPreferences = context.getSharedPreferences("project", MODE_PRIVATE);
                 int userId = sharedPreferences.getInt("user_id", -1);
-
-                RetrofitClient.getInstance().getApi().getUserReservations(userId).enqueue(new Callback<JsonObject>() {
+                int selectedReservationId = sharedPreferences.getInt("selected_reservation_id", -1);
+                RetrofitClient.getInstance().getApi().getUserReservationDetails(userId, selectedReservationId).enqueue(new Callback<JsonObject>() {
                     @Override
                     public void onResponse(Call<JsonObject> call, Response<JsonObject> response)
                     {
@@ -84,6 +84,7 @@ public class Fragment2 extends Fragment {
                             recyclerView.setVisibility(View.VISIBLE);
                             noConfirmedBookingsTextView.setVisibility(View.GONE);
 
+                            // Inside your loop where you are parsing the JSON response
                             for (JsonElement element : jsonArray) {
                                 Reservation reservation = new Reservation();
                                 reservation.setReservationId(element.getAsJsonObject().get("reservation_id").getAsInt());
@@ -93,6 +94,9 @@ public class Fragment2 extends Fragment {
                                 Room room = new Room();
                                 room.setRoomType(element.getAsJsonObject().get("room_type").getAsString());
                                 room.setRoomNumber(element.getAsJsonObject().get("room_number").getAsInt());
+
+                                // Extract the image name and set it in the room object
+                                room.setImages(element.getAsJsonObject().get("images").getAsString());
 
                                 reservation.setRoom(room);
 
@@ -105,15 +109,18 @@ public class Fragment2 extends Fragment {
 
                                 bookingItemList.add(reservation);
                             }
+
+                        }
                             bookingListAdapter.notifyDataSetChanged();
                         }
-                    }
-
 
                     @Override
                     public void onFailure(Call<JsonObject> call, Throwable t) {
-                        // Handle failure here
+
                     }
+
+
+
                 });
             }
     }

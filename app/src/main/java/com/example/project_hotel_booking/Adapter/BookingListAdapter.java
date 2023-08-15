@@ -60,6 +60,7 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
             holder.textRoomType.setText("Unknown Room Type");
         }
         holder.textRoomNumber.setText("Room Number: " + room.getRoomNumber());
+        Glide.with(context).load("http://192.168.0.110:4004/"+room.getImages()).into(holder.roomImageView);
 
         holder.btn_detail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +105,7 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
         TextView textRoomType, textRoomNumber;
         Button btn_detail;
         LinearLayout linearLayout;
+        ImageView roomImageView;
 
         public ViewHolder(@NonNull View itemView)
         {
@@ -113,7 +115,7 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
             textRoomNumber = itemView.findViewById(R.id.textRoomNumber);
             textRoomType = itemView.findViewById(R.id.textRoomType);
             linearLayout = itemView.findViewById(R.id.your_linear_layout_id);
-
+            roomImageView = itemView.findViewById(R.id.image);
             btn_detail = itemView.findViewById(R.id.btn_detail);
         }
     }

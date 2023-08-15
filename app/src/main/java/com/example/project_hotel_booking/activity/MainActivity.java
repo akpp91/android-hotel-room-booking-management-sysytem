@@ -8,6 +8,10 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.project_hotel_booking.Adapter.ViewPagerAdapter;
@@ -33,9 +37,23 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.setAdapter(new ViewPagerAdapter(this));
 
+        int[] tabIcons = {R.drawable.room_list, R.drawable.confirm_bookings, R.drawable.drawable_profile};
+        String[] tabTitles = {"Room List", "Confirm Bookings", "Profile"};
+
         new TabLayoutMediator(tabLayout, viewPager,
-                (tab, position) -> tab.setText("Tab " + (position + 1))
-        ).attach();
+                (tab, position) ->
+                {
+                    View customTabView = LayoutInflater.from(this).inflate(R.layout.custom_tab_layout, null);
+
+                    ImageView tabIcon = customTabView.findViewById(R.id.tabIcon);
+                    TextView tabTitle = customTabView.findViewById(R.id.tabTitle);
+
+                    tabIcon.setImageResource(tabIcons[position]); // Set the icon
+                    tabTitle.setText(tabTitles[position]); // Set the title
+
+                    tab.setCustomView(customTabView);
+                }).attach();
+
     }
 
     @Override
