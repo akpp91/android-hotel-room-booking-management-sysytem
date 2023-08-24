@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,78 +63,74 @@ public class Fragment2 extends Fragment {
 
     private void getBookings() {
         // Get the context of the Fragment
-            Context context = getContext();
+        Context context = getContext();
 
-            // Check if the context is not null before proceeding
-            if (context != null) {
-                SharedPreferences sharedPreferences = context.getSharedPreferences("project", MODE_PRIVATE);
-                int userId = sharedPreferences.getInt("user_id", -1);
-                int selectedReservationId = sharedPreferences.getInt("selected_reservation_id", -1);
-                RetrofitClient.getInstance().getApi().getUserReservationDetails(userId, selectedReservationId).enqueue(new Callback<JsonObject>() {
-                    @Override
-                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response)
-                    {
-
-                        if (response.body() == null) {
-                            Log.e("fragment_2","json object is null");
-
-                        }
-                        else
-                        {
-
-                            JsonArray jsonArray = response.body().getAsJsonObject().get("data").getAsJsonArray();
-
-                            if (jsonArray == null || jsonArray.size() == 0) {
-                                // No confirmed bookings
-                                recyclerView.setVisibility(View.GONE);
-                                noConfirmedBookingsTextView.setVisibility(View.VISIBLE);
-                            }
-
-                            else
-
-                            {
-                                // Confirmed bookings available
-                                recyclerView.setVisibility(View.VISIBLE);
-                                noConfirmedBookingsTextView.setVisibility(View.GONE);
-
-                                // Inside your loop where you are parsing the JSON response
-                                for (JsonElement element : jsonArray) {
-                                    Reservation reservation = new Reservation();
-                                    reservation.setReservationId(element.getAsJsonObject().get("reservation_id").getAsInt());
-                                    reservation.setCheckInDate(element.getAsJsonObject().get("check_in_date").getAsString());
-                                    reservation.setCheckOutDate(element.getAsJsonObject().get("check_out_date").getAsString());
-
-                                    Room room = new Room();
-                                    room.setRoomType(element.getAsJsonObject().get("room_type").getAsString());
-                                    room.setRoomNumber(element.getAsJsonObject().get("room_number").getAsInt());
-
-                                    // Extract the image name and set it in the room object
-                                    room.setImages(element.getAsJsonObject().get("images").getAsString());
-
-                                    reservation.setRoom(room);
-
-                                    Confirmation confirmation = new Confirmation();
-                                    confirmation.setConfirmationId(element.getAsJsonObject().get("confirmation_id").getAsInt());
-                                    confirmation.setAmount(element.getAsJsonObject().get("amount").getAsFloat());
-                                    confirmation.setPaymentDate(element.getAsJsonObject().get("payment_date").getAsString());
-
-                                    reservation.setConfirmation(confirmation);
-
-                                    bookingItemList.add(reservation);
-                                }
-
-                            }
-                            bookingListAdapter.notifyDataSetChanged();
-                        }
-
-                        }
-
-                    @Override
-                    public void onFailure(Call<JsonObject> call, Throwable t) {
-                        Toast.makeText(getContext(), "fail to to get data", Toast.LENGTH_SHORT).show();
+        // Check if the context is not null before proceeding
+        if (context != null) {
+            SharedPreferences sharedPreferences = context.getSharedPreferences("project", MODE_PRIVATE);
+            int userId = sharedPreferences.getInt("user_id", -1);
+            int selectedReservationId = sharedPreferences.getInt("selected_reservation_id", -1);
+            RetrofitClient.getInstance().getApi().getUserReservationDetail(userId).enqueue(new Callback<JsonObject>() {
+                @Override
+                public void onResponse(Call<JsonObject> call, Response<JsonObject> response)
+                {
+                    if (response.body() == null) {
+                        Toast.makeText(context, "u dont have any confirm bookings", Toast.LENGTH_SHORT).show();
                     }
-                });
-            }
+                    else
+                    {
+                        JsonArray jsonArray = response.body().getAsJsonObject().get("data").getAsJsonArray();
+
+                        if (jsonArray == null || jsonArray.size() == 0) {
+                            // No confirmed bookings
+                            recyclerView.setVisibility(View.GONE);
+                            noConfirmedBookingsTextView.setVisibility(View.VISIBLE);
+                        } else {
+                            // Confirmed bookings available
+                            recyclerView.setVisibility(View.VISIBLE);
+                            noConfirmedBookingsTextView.setVisibility(View.GONE);
+
+                            // Inside your loop where you are parsing the JSON response
+                            for (JsonElement element : jsonArray) {
+                                Reservation reservation = new Reservation();
+                                reservation.setReservationId(element.getAsJsonObject().get("reservation_id").getAsInt());
+                                reservation.setCheckInDate(element.getAsJsonObject().get("check_in_date").getAsString());
+                                reservation.setCheckOutDate(element.getAsJsonObject().get("check_out_date").getAsString());
+
+                                Room room = new Room();
+                                room.setRoomType(element.getAsJsonObject().get("room_type").getAsString());
+                                room.setRoomNumber(element.getAsJsonObject().get("room_number").getAsInt());
+
+                                // Extract the image name and set it in the room object
+                                room.setImages(element.getAsJsonObject().get("images").getAsString());
+
+                                reservation.setRoom(room);
+
+                                Confirmation confirmation = new Confirmation();
+                                confirmation.setConfirmationId(element.getAsJsonObject().get("confirmation_id").getAsInt());
+                                confirmation.setAmount(element.getAsJsonObject().get("amount").getAsFloat());
+                                confirmation.setPaymentDate(element.getAsJsonObject().get("payment_date").getAsString());
+
+                                reservation.setConfirmation(confirmation);
+
+                                bookingItemList.add(reservation);
+                            }
+
+                        }
+                        bookingListAdapter.notifyDataSetChanged();
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<JsonObject> call, Throwable t) {
+
+                }
+
+
+
+            });
+        }
     }
 
 }

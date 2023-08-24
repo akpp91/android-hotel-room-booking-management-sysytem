@@ -43,9 +43,9 @@ public class Login_Activity extends AppCompatActivity {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    User user =new User() ;
-                    user.setEmail(editUserName.getText().toString());
-                    user.setPassword(editPassword.getText().toString());
+                User user =new User() ;
+                user.setEmail(editUserName.getText().toString());
+                user.setPassword(editPassword.getText().toString());
                 System.out.println(user);
 
 

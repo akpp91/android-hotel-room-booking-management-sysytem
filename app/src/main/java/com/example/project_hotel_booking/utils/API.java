@@ -11,9 +11,9 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface API {
-    String BASE_URL ="http://172.18.6.158:4000";
+    String BASE_URL ="http://192.168.0.110:4000";
 
-    @POST("/user/login")
+    @POST("/user/login/mobile")
     Call<JsonObject> loginUser(@Body User user);
 
     @POST("/user/register")
@@ -33,6 +33,8 @@ public interface API {
 
     @GET("/reservation/user_reservation/{userId}/{reservationId}")
     Call<JsonObject> getUserReservationDetails(@Path("userId") int userId, @Path("reservationId") int reservationId);
+    @GET("/reservation/user_c_reservation/{userId}")
+    Call<JsonObject> getUserReservationDetail(@Path("userId") int userId);
 
     @POST("/feedback/post")
     Call<JsonObject> postFeedback(@Body JsonObject feedbackData);
