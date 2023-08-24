@@ -10,10 +10,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.project_hotel_booking.Adapter.BookingListAdapter;
 import com.example.project_hotel_booking.R;
@@ -73,54 +75,65 @@ public class Fragment2 extends Fragment {
                     @Override
                     public void onResponse(Call<JsonObject> call, Response<JsonObject> response)
                     {
-                        JsonArray jsonArray = response.body().getAsJsonObject().get("data").getAsJsonArray();
 
-                        if (jsonArray == null || jsonArray.size() == 0) {
-                            // No confirmed bookings
-                            recyclerView.setVisibility(View.GONE);
-                            noConfirmedBookingsTextView.setVisibility(View.VISIBLE);
-                        } else {
-                            // Confirmed bookings available
-                            recyclerView.setVisibility(View.VISIBLE);
-                            noConfirmedBookingsTextView.setVisibility(View.GONE);
-
-                            // Inside your loop where you are parsing the JSON response
-                            for (JsonElement element : jsonArray) {
-                                Reservation reservation = new Reservation();
-                                reservation.setReservationId(element.getAsJsonObject().get("reservation_id").getAsInt());
-                                reservation.setCheckInDate(element.getAsJsonObject().get("check_in_date").getAsString());
-                                reservation.setCheckOutDate(element.getAsJsonObject().get("check_out_date").getAsString());
-
-                                Room room = new Room();
-                                room.setRoomType(element.getAsJsonObject().get("room_type").getAsString());
-                                room.setRoomNumber(element.getAsJsonObject().get("room_number").getAsInt());
-
-                                // Extract the image name and set it in the room object
-                                room.setImages(element.getAsJsonObject().get("images").getAsString());
-
-                                reservation.setRoom(room);
-
-                                Confirmation confirmation = new Confirmation();
-                                confirmation.setConfirmationId(element.getAsJsonObject().get("confirmation_id").getAsInt());
-                                confirmation.setAmount(element.getAsJsonObject().get("amount").getAsFloat());
-                                confirmation.setPaymentDate(element.getAsJsonObject().get("payment_date").getAsString());
-
-                                reservation.setConfirmation(confirmation);
-
-                                bookingItemList.add(reservation);
-                            }
+                        if (response.body() == null) {
+                            Log.e("fragment_2","json object is null");
 
                         }
+                        else
+                        {
+
+                            JsonArray jsonArray = response.body().getAsJsonObject().get("data").getAsJsonArray();
+
+                            if (jsonArray == null || jsonArray.size() == 0) {
+                                // No confirmed bookings
+                                recyclerView.setVisibility(View.GONE);
+                                noConfirmedBookingsTextView.setVisibility(View.VISIBLE);
+                            }
+
+                            else
+
+                            {
+                                // Confirmed bookings available
+                                recyclerView.setVisibility(View.VISIBLE);
+                                noConfirmedBookingsTextView.setVisibility(View.GONE);
+
+                                // Inside your loop where you are parsing the JSON response
+                                for (JsonElement element : jsonArray) {
+                                    Reservation reservation = new Reservation();
+                                    reservation.setReservationId(element.getAsJsonObject().get("reservation_id").getAsInt());
+                                    reservation.setCheckInDate(element.getAsJsonObject().get("check_in_date").getAsString());
+                                    reservation.setCheckOutDate(element.getAsJsonObject().get("check_out_date").getAsString());
+
+                                    Room room = new Room();
+                                    room.setRoomType(element.getAsJsonObject().get("room_type").getAsString());
+                                    room.setRoomNumber(element.getAsJsonObject().get("room_number").getAsInt());
+
+                                    // Extract the image name and set it in the room object
+                                    room.setImages(element.getAsJsonObject().get("images").getAsString());
+
+                                    reservation.setRoom(room);
+
+                                    Confirmation confirmation = new Confirmation();
+                                    confirmation.setConfirmationId(element.getAsJsonObject().get("confirmation_id").getAsInt());
+                                    confirmation.setAmount(element.getAsJsonObject().get("amount").getAsFloat());
+                                    confirmation.setPaymentDate(element.getAsJsonObject().get("payment_date").getAsString());
+
+                                    reservation.setConfirmation(confirmation);
+
+                                    bookingItemList.add(reservation);
+                                }
+
+                            }
                             bookingListAdapter.notifyDataSetChanged();
+                        }
+
                         }
 
                     @Override
                     public void onFailure(Call<JsonObject> call, Throwable t) {
-
+                        Toast.makeText(getContext(), "fail to to get data", Toast.LENGTH_SHORT).show();
                     }
-
-
-
                 });
             }
     }

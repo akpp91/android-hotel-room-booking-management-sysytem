@@ -61,7 +61,8 @@ public class Fragment3 extends Fragment {
         RetrofitClient.getInstance().getApi().RetriveUser(user_id).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (response.isSuccessful() && response.body() != null && response.body().has("data")) {
+                if (response.isSuccessful() ) {
+
                     JsonObject jsonObject = response.body().getAsJsonObject("data");
 
                     Log.d("User ID", "User obj retrieved from DB: " + jsonObject);
@@ -69,26 +70,75 @@ public class Fragment3 extends Fragment {
                     if (jsonObject != null && jsonObject.has("password")) {
                         String storedPassword = jsonObject.get("password").getAsString();
 
-                        if (oldPassword.equals(storedPassword)) {
+                        if (oldPassword.equals(storedPassword))
+                        {
                             String newPassword = etNewPassword.getText().toString();
                             String confirmPassword = etConfirmPassword.getText().toString();
 
+
+
+
+                            JsonObject password = new JsonObject();
+
+
+                            password.addProperty("password", newPassword);
+
+
+
+
                             // Validate passwords and perform change password logic here
                             if (newPassword.equals(confirmPassword)) {
-                                Toast.makeText(getContext(), "Password changed successfully", Toast.LENGTH_SHORT).show();
-//                                RetrofitClient.getInstance().getApi()
+                               changePassword(password ,user_id);
+                                Toast.makeText(getContext(), "chahe pass method getting called", Toast.LENGTH_SHORT).show();
+
+
                             } else {
                                 Toast.makeText(getContext(), "New password and confirm password do not match", Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             Toast.makeText(getContext(), "Incorrect old password", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
+                    }
+                    else
+                    {
                         Toast.makeText(getContext(), "Password data not found in response", Toast.LENGTH_SHORT).show();
                     }
-                } else {
+                }
+                else
+                {
                     Toast.makeText(getContext(), "Failed to retrieve user data", Toast.LENGTH_SHORT).show();
                 }
+            }
+
+            private void changePassword(JsonObject password,  int user_id) {
+                Log.d("User_Id","user id in chane passord "+user_id);
+                Log.d("User_Id","password in chane passord "+password);
+
+
+                RetrofitClient.getInstance().getApi().UpdatePassword(password, user_id).enqueue(new Callback<JsonObject>()
+                {
+                    @Override
+                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                        Log.e("Res",""+response.body());
+
+                        if (response.isSuccessful())
+                        {
+
+                                    Toast.makeText(getContext(), "Operation successful rows affected", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        else
+                        {
+                            Toast.makeText(getContext(), "responce unsuccessfull in update password", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<JsonObject> call, Throwable t) {
+                        Toast.makeText(getContext(), "Fail to update password", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override

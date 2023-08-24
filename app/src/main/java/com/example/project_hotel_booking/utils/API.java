@@ -7,10 +7,11 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface API {
-    String BASE_URL ="http://192.168.0.110:4004";
+    String BASE_URL ="http://172.18.6.158:4000";
 
     @POST("/user/login")
     Call<JsonObject> loginUser(@Body User user);
@@ -38,5 +39,8 @@ public interface API {
 
     @GET("/user/{id}")
     Call<JsonObject> RetriveUser(@Path("id") Integer id);
+
+    @PUT("/user/change_password/{id}")
+    Call<JsonObject> UpdatePassword(@Body JsonObject jsonObject, @Path("id") Integer id);
 
 }
