@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -134,7 +135,37 @@ private Button btn_feedback;
             }
         });
 
+        // Handle the back button press using the fragment's view
+        rootView.setFocusableInTouchMode(true);
+        rootView.requestFocus();
+        rootView.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+                    // Create an instance of the Fragment2
+                    Fragment2 fragment2 = new Fragment2();
+
+                    // Start a new fragment transaction
+                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+
+                    // Replace the current fragment with Fragment2
+                    transaction.replace(R.id.fragment_container_confirm_list, fragment2);
+
+                    // Remove the current fragment from the back stack
+                    getParentFragmentManager().popBackStack();
+
+                    // Commit the transaction
+                    transaction.commit();
+
+                    return true;
+                }
+                return false;
+            }
+
+        });
+
         return rootView;
 
     }
+
 }

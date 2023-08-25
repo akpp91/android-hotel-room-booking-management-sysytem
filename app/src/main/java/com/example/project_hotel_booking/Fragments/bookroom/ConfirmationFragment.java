@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.project_hotel_booking.Fragments.bookroom.ConfirmationMessageFragment;
 import com.example.project_hotel_booking.R;
+import com.example.project_hotel_booking.activity.MainActivity;
 import com.example.project_hotel_booking.utils.RetrofitClient;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.JsonObject;
@@ -101,7 +103,7 @@ public class ConfirmationFragment extends Fragment {
 
                             ConfirmationMessageFragment messageFragment = new ConfirmationMessageFragment();
                             fragmentTransaction.replace(R.id.containerFrameLayout, messageFragment);
-//                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.addToBackStack(null);
                             fragmentTransaction.commit();
                         } else {
                             // Reservation failed, show an error message or perform error handling
@@ -118,6 +120,22 @@ public class ConfirmationFragment extends Fragment {
             }
         });
 
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+                    // Hide the current fragment
+                    getView().setVisibility(View.INVISIBLE);
+
+
+                }
+                return false;
+            }
+        });
         return view;
     }
+
+
 }

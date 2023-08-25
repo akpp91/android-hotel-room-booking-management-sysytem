@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.project_hotel_booking.R;
+import com.example.project_hotel_booking.activity.MainActivity;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -46,7 +48,8 @@ public class DateActivityFragment extends Fragment {
         buttonConfirm = view.findViewById(R.id.button_confirm);
         calendar = Calendar.getInstance();
 
-        textCheckInDate.setOnClickListener(new View.OnClickListener() {
+        textCheckInDate.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog(true);
@@ -73,8 +76,7 @@ public class DateActivityFragment extends Fragment {
                 editor.putString("check_out_date", textCheckOutDate.getText().toString());
                 editor.apply();
 
-                // Set the visibility of the DateActivityFragment to INVISIBLE
-                getView().setVisibility(View.INVISIBLE);
+
 
                 // Replace the current fragment with the ConfirmationFragment
                 FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
@@ -82,11 +84,43 @@ public class DateActivityFragment extends Fragment {
 
                 ConfirmationFragment confirmationFragment = new ConfirmationFragment();
                 fragmentTransaction.replace(R.id.containerFrameLayout, confirmationFragment); // R.id.fragment_container should be the ID of the container in your activity's layout
-//                fragmentTransaction.addToBackStack(null); // This allows you to go back to the DateActivityFragment if needed
+                fragmentTransaction.addToBackStack(null); // This allows you to go back to the DateActivityFragment if needed
                 fragmentTransaction.commit();
             }
         });
+        // Handle the back button press using the fragment's view
+        view.setFocusableInTouchMode(true);
+        view.requestFocus();
+        view.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
+                    // Create an instance of the SelectRoomFragment
+                    SelectRoomFragment selectRoomFragment = new SelectRoomFragment();
 
+                    // Start a new fragment transaction
+                    FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+
+                    // Replace the current fragment with SelectRoomFragment
+                    transaction.replace(R.id.containerFrameLayout, selectRoomFragment);
+
+                    // Remove the current fragment from the back stack
+//                    getParentFragmentManager().popBackStack();
+
+                    // Commit the transaction
+                    transaction.commit();
+                    // Request MainActivity to navigate back to appropriate fragment
+                    if (getActivity() instanceof MainActivity) {
+                        MainActivity mainActivity = (MainActivity) getActivity();
+                        mainActivity.navigateToSelectRoomFragment();
+                    }
+                    return true;
+                }
+                return false;
+            }
+
+
+        });
 
         return view;
     }

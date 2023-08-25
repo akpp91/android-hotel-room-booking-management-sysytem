@@ -75,7 +75,7 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
 
                 FragmentTransaction transaction = ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container_confirm_list, bookingDetailFragment);
-//                transaction.addToBackStack(null);
+                transaction.addToBackStack(null);
                 transaction.commit();
 
                 // Set the visibility of frag2 to invisible

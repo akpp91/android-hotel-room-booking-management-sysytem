@@ -30,8 +30,13 @@ public class Fragment1 extends Fragment {
         // Replace the container with the SelectRoomFragment
         FragmentManager fragmentManager = getChildFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        // Remove the previous fragments from the back stack before adding a new one
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+        // Add the SelectRoomFragment to the container and to the back stack
         fragmentTransaction.replace(R.id.containerFrameLayout, new SelectRoomFragment());
-        fragmentTransaction.addToBackStack(null); // This allows you to go back to the DateActivityFragment if needed
+        fragmentTransaction.addToBackStack(null);
 
         fragmentTransaction.commit();
 
