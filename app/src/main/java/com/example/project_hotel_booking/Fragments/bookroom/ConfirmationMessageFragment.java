@@ -1,4 +1,4 @@
-package com.example.project_hotel_booking.Fragments;
+package com.example.project_hotel_booking.Fragments.bookroom;
 
 import android.os.Bundle;
 
@@ -19,7 +19,6 @@ public class ConfirmationMessageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_confirmation_message, container, false);
 
-        // You can customize this fragment to display the confirmation message
 
         return view;
     }

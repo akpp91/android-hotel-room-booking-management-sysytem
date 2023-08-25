@@ -1,7 +1,6 @@
 package com.example.project_hotel_booking.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,13 +17,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.project_hotel_booking.Fragments.DateActivityFragment;
+import com.example.project_hotel_booking.Fragments.bookroom.DateActivityFragment;
 import com.example.project_hotel_booking.R;
-import com.example.project_hotel_booking.activity.Date_Activity;
 import com.example.project_hotel_booking.entity.Room;
 
 import java.util.List;
-import com.example.project_hotel_booking.Fragments.DateActivityFragment;
 
 
 public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomViewHolder>

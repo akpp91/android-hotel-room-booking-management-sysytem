@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.project_hotel_booking.Fragments.Fragment1;
-import com.example.project_hotel_booking.Fragments.Fragment2;
-import com.example.project_hotel_booking.Fragments.Fragment3;
+import com.example.project_hotel_booking.Fragments.bookroom.Fragment1;
+import com.example.project_hotel_booking.Fragments.history.Fragment2;
+import com.example.project_hotel_booking.Fragments.password.Fragment3;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {

@@ -1,4 +1,4 @@
-package com.example.project_hotel_booking.Fragments;
+package com.example.project_hotel_booking.Fragments.history;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -16,10 +16,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.project_hotel_booking.Fragments.history.FeedbackFragment;
 import com.example.project_hotel_booking.R;
-import com.example.project_hotel_booking.entity.Confirmation;
-import com.example.project_hotel_booking.entity.Reservation;
-import com.example.project_hotel_booking.entity.Room;
 import com.example.project_hotel_booking.utils.RetrofitClient;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

@@ -1,4 +1,4 @@
-package com.example.project_hotel_booking.Fragments;
+package com.example.project_hotel_booking.Fragments.bookroom;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.project_hotel_booking.Fragments.bookroom.ConfirmationMessageFragment;
 import com.example.project_hotel_booking.R;
 import com.example.project_hotel_booking.utils.RetrofitClient;
 import com.google.android.material.snackbar.Snackbar;

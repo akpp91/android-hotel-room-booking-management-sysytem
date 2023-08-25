@@ -5,25 +5,20 @@
     import androidx.fragment.app.FragmentManager;
     import androidx.fragment.app.FragmentTransaction;
     import androidx.viewpager2.widget.ViewPager2;
-    import androidx.appcompat.widget.Toolbar;
 
     import android.content.Intent;
     import android.os.Bundle;
-    import android.view.KeyEvent;
     import android.view.LayoutInflater;
     import android.view.Menu;
     import android.view.MenuItem;
     import android.view.View;
     import android.widget.ImageView;
     import android.widget.TextView;
-    import android.widget.Toast;
 
     import com.example.project_hotel_booking.Adapter.ViewPagerAdapter;
-    import com.example.project_hotel_booking.Fragments.Fragment1;
     import com.example.project_hotel_booking.R;
     import com.google.android.material.tabs.TabLayout;
     import com.google.android.material.tabs.TabLayoutMediator;
-    import com.example.project_hotel_booking.Fragments.Fragment1;
 
     public class MainActivity extends AppCompatActivity {
         androidx.appcompat.widget.Toolbar toolbar;

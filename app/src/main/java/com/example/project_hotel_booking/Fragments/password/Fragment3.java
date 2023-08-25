@@ -1,4 +1,4 @@
-package com.example.project_hotel_booking.Fragments;
+package com.example.project_hotel_booking.Fragments.password;
 
 import android.content.Context;
 import android.content.SharedPreferences;

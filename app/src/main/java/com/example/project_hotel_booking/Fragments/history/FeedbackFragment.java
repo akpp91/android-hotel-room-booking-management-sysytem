@@ -1,4 +1,4 @@
-package com.example.project_hotel_booking.Fragments;
+package com.example.project_hotel_booking.Fragments.history;
 
 import static android.content.Context.MODE_PRIVATE;
 
