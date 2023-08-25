@@ -44,5 +44,7 @@ public interface API {
 
     @PUT("/user/change_password/{id}")
     Call<JsonObject> UpdatePassword(@Body JsonObject jsonObject, @Path("id") Integer id);
+    @POST("/room/availability")
+    Call<JsonObject> checkRoomAvailability(@Body JsonObject availabilityData);
 
 }
