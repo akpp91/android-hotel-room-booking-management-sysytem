@@ -49,7 +49,7 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
         holder.textRoomName.setText(""+room.getRoomNumber());
         holder.textDetails.setText(room.getRoomType());
 
-        Glide.with(context).load("http://192.168.0.110:4004/"+room.getImages()).into(holder.image);
+        Glide.with(context).load("http://192.168.5.110:4000/"+room.getImages()).into(holder.image);
         holder.selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

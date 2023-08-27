@@ -11,7 +11,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface API {
-    String BASE_URL ="http://192.168.0.110:4000";
+    String BASE_URL ="http://192.168.5.110:4000";
 
     @POST("/user/login/mobile")
     Call<JsonObject> loginUser(@Body User user);

@@ -123,7 +123,7 @@ public class DateActivityFragment extends Fragment {
                         .enqueue(new Callback<JsonObject>() {
                             @Override
                             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                                if(response.body().get("data") == null)
+                                if(response.body().get("data") != null)
                                 {
                                     // Add your code for handling the confirm button click
                                     sharedPreferences = requireActivity().getSharedPreferences("project", Context.MODE_PRIVATE);

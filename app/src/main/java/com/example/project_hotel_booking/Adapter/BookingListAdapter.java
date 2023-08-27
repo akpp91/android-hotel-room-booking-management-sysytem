@@ -56,7 +56,7 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
             holder.textRoomType.setText("Unknown Room Type");
         }
         holder.textRoomNumber.setText("Room Number: " + room.getRoomNumber());
-        Glide.with(context).load("http://192.168.0.110:4004/"+room.getImages()).into(holder.roomImageView);
+        Glide.with(context).load("http://192.168.5.110:4000/"+room.getImages()).into(holder.roomImageView);
 
         holder.btn_detail.setOnClickListener(new View.OnClickListener() {
             @Override
