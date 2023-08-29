@@ -24,6 +24,7 @@ import com.example.project_hotel_booking.R;
 import com.example.project_hotel_booking.activity.MainActivity;
 import com.example.project_hotel_booking.utils.RetrofitClient;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.io.Console;
@@ -122,37 +123,53 @@ public class DateActivityFragment extends Fragment {
                 RetrofitClient.getInstance().getApi().checkRoomAvailability(reservationData)
                         .enqueue(new Callback<JsonObject>() {
                             @Override
-                            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                                if(response.body().get("data") != null)
+                            public void onResponse(Call<JsonObject> call, Response<JsonObject> response)
+                            {
+                                Log.d("responce_dateactivityfrag",""+response);
+
+                                if (response.isSuccessful() && response.body() != null)
                                 {
-                                    // Add your code for handling the confirm button click
-                                    sharedPreferences = requireActivity().getSharedPreferences("project", Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    if (response.body().get("status").getAsString().equals("success")) {
+                                        JsonArray roomDataArray = response.body().getAsJsonArray("data");
 
-                                    editor.putString("check_in_date", textCheckInDate.getText().toString());
-                                    editor.putString("check_out_date", textCheckOutDate.getText().toString());
+                                        if (roomDataArray != null && roomDataArray.size() > 0) {
+                                            // Add your code for handling the confirm button click
+                                            sharedPreferences = requireActivity().getSharedPreferences("project", Context.MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                                    editor.apply();
+                                            editor.putString("check_in_date", textCheckInDate.getText().toString());
+                                            editor.putString("check_out_date", textCheckOutDate.getText().toString());
 
-
-                                    // Replace the current fragment with the ConfirmationFragment
-                                    FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-                                    ConfirmationFragment confirmationFragment = new ConfirmationFragment();
-                                    fragmentTransaction.replace(R.id.containerFrameLayout, confirmationFragment); // R.id.fragment_container should be the ID of the container in your activity's layout
-                                    fragmentTransaction.addToBackStack(null); // This allows you to go back to the DateActivityFragment if needed
-                                    fragmentTransaction.commit();
+                                            editor.apply();
 
 
+                                            // Replace the current fragment with the ConfirmationFragment
+                                            FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+                                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                                            ConfirmationFragment confirmationFragment = new ConfirmationFragment();
+                                            fragmentTransaction.replace(R.id.containerFrameLayout, confirmationFragment); // R.id.fragment_container should be the ID of the container in your activity's layout
+                                            fragmentTransaction.addToBackStack(null); // This allows you to go back to the DateActivityFragment if needed
+                                            fragmentTransaction.commit();
+
+                                        } else {
+                                            Snackbar.make(view, "Rooms are not available for these numbers and date! try again", Snackbar.LENGTH_SHORT).show();
+
+
+
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Toast.makeText(getContext(), "Internal error", Toast.LENGTH_SHORT).show();
+                                    }
 
                                 }
-                                else
-                                {
-
-                                    Snackbar.make(view, "Rooms are not available for these numbers and date! try again", Snackbar.LENGTH_SHORT).show();
-
-                                   }
+                                else {
+                                        // Handle API response error
+                                        Toast.makeText(getContext(), "Failed to retrieve room availability", Toast.LENGTH_SHORT).show();
+                                    }
                             }
 
                             @Override
