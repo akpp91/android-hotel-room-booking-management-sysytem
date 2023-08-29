@@ -30,7 +30,8 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
     private Context context;
     private SharedPreferences sharedPreferences;
 
-    public RoomListAdapter( Context context, List<Room> roomList) {
+    public RoomListAdapter( Context context, List<Room> roomList)
+    {
 
         this.context = context;
         this.roomList = roomList;
@@ -91,6 +92,7 @@ public class RoomListAdapter extends RecyclerView.Adapter<RoomListAdapter.RoomVi
 
     @Override
     public int getItemCount() {
+
         return roomList.size();
     }
 

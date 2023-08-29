@@ -26,7 +26,7 @@ import com.example.project_hotel_booking.entity.Room;
 
 import java.util.List;
 
-public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.ViewHolder> {
+public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.ViewHolder>  {
 
     private Context context;
     private List<Reservation> bookingItemList;

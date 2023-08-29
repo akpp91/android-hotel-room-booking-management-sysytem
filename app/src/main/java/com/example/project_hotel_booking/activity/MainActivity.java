@@ -40,8 +40,8 @@
 
             viewPager.setAdapter(new ViewPagerAdapter(this));
 
-            int[] tabIcons = {R.drawable.room_list, R.drawable.confirm_bookings, R.drawable.drawable_profile};
-            String[] tabTitles = {"Room List", "Confirm Bookings", "Profile"};
+            int[] tabIcons = {R.drawable.room_list, R.drawable.confirm_bookings,R.drawable.booking_list, R.drawable.drawable_profile};
+            String[] tabTitles = {"Room List", "Confirm Bookings","booking list" ,"Profile"};
 
             new TabLayoutMediator(tabLayout, viewPager,
                     (tab, position) ->

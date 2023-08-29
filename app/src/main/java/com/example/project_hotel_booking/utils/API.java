@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -46,5 +47,9 @@ public interface API {
     Call<JsonObject> UpdatePassword(@Body JsonObject jsonObject, @Path("id") Integer id);
     @POST("/room/availability")
     Call<JsonObject> checkRoomAvailability(@Body JsonObject availabilityData);
+
+    @DELETE("/confirmation/cancel/{confirmationId}")
+    Call<JsonObject> cancelReservation(@Path("confirmationId") int confirmationId);
+
 
 }
