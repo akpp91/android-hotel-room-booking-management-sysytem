@@ -5,8 +5,6 @@ End User: The end users of the hotel booking management project would be Admin a
 
 Project objective : The objective of the hotel booking management project is to streamline and automate various hotel operations to improve efficiency, enhance guest experiences, and optimize overall management processes.
 
-Project Scope( updation - not too big ,not too small and precise ) - 
-
 Project  SCOPE:-  
            A software application for a Hotel Booking System. It should display the different categories in which rooms are available to book a room in a hotel, the different facilities and options available w.r.t prices and accordingly generate the bill including the customer details, the duration of the reservation and the amount payable by introducing personal information.
 
