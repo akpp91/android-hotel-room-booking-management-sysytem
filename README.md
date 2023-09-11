@@ -24,3 +24,14 @@ technology used-
 android for user only
 server - node.js using express framework
 database - mysql
+
+Functionality performed by Customer(User):
+
++ Customer Registration : Any customer can register on a website using the registration.
++ Customer Login : This is the login form, from which customers can login into the system.
++ Check Room : This is the check room form where customers can easily check availability of any type of hotel rooms.
++ Customer Booking : This is a customer booking form where customers will be able to book a room.
++ Customer Order Confirmation: This is the customer booking confirmation form where a customer will be able to confirm his booking.
++ Customer My Bookings : Customers can see their history of booking from this form.
++ Customer Feedback : This is a customer feedback form where customers can give feedback on the Room.
++ Change Password : This is the change password form where the user can change his account password.
